@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/ninjas")
 public class NinjaController {
 
-    @GetMapping("/mona")
+    @GetMapping("/monaru")
     public String boasVindas(){
-        return "Bem vindo, mona";
+        return "Bem vindo, monaru";
     }
+
 
 
 }
