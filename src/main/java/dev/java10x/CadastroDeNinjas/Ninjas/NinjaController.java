@@ -1,5 +1,6 @@
 package dev.java10x.CadastroDeNinjas.Ninjas;
 
+import org.springframework.util.RouteMatcher;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,12 +34,13 @@ public class NinjaController {
     }
 
 
-    @GetMapping("/todosID")
-    public String mostrarTodosOsNinjasPorId(){
-        return "Ninja por id";
+    @GetMapping("/listar/{id}")
+    public NinjaModel mostrarNinjaPorId(@PathVariable Long id){
+        NinjaModel ninjaModel = ninjaService.listarNinjaPorId(id);
+        return ninjaModel;
     }
 
-    @PutMapping("/alterarId")
+    @PutMapping("/{id}")
     public String alterarNinjasPorId(){
         return "Ninja por id";
     }
