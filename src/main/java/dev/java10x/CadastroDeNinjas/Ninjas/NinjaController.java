@@ -1,5 +1,6 @@
 package dev.java10x.CadastroDeNinjas.Ninjas;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.util.RouteMatcher;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,8 +46,17 @@ public class NinjaController {
         return "Ninja por id";
     }
 
-    @DeleteMapping("/deletarId")
-    public String deletetarNinjaPorId(){
-        return "NinjaDeletado";
+    @DeleteMapping("/deletar/{id}")
+    public String deletetarNinjaPorId(@PathVariable Long id){
+       try{
+           ninjaService.deletarNinja(id);
+           return "Ninja deletado com sucesso";
+       }
+       catch (EntityNotFoundException e){
+           System.out.println(e.getMessage());
+           return e.getMessage();
+       }
     }
+
+    
 }

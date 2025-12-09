@@ -1,6 +1,7 @@
 package dev.java10x.CadastroDeNinjas.Ninjas;
 
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,4 +35,15 @@ public class NinjaService {
     }
 
 
+    public void deletarNinja(Long id) {
+
+        boolean exists = ninjaRepository.existsById(id);
+        if(exists){
+            ninjaRepository.deleteById(id);
+        }
+        else{
+            throw new EntityNotFoundException("Id não encontrado");
+        }
+
+    }
 }
