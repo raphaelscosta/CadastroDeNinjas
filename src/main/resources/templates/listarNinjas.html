@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabela de Ninjas</title>
+    <style>
+        /* Reset básico */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Container do Cabeçalho (Título + Botão Adicionar) */
+        .header-container {
+            width: 90%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between; /* Título na esq, Botão na dir */
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #333;
+            margin: 0; /* Removido margem para alinhar com botão */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1.5rem;
+        }
+
+        /* Estilo da Tabela */
+        table {
+            width: 90%;
+            max-width: 1200px;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background-color: #009879;
+            color: #ffffff;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #dddddd;
+            transition: all 0.2s ease-in;
+        }
+
+        tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+            transform: scale(1.01);
+            font-weight: bold;
+            color: #009879;
+        }
+
+        /* Botões Gerais */
+        .btn {
+            padding: 8px 15px; /* Aumentei um pouco o padding */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: white;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 5px;
+            transition: opacity 0.3s, transform 0.2s;
+            font-weight: normal; /* Reseta o bold do hover da tr */
+        }
+
+        .btn:hover {
+            opacity: 0.85;
+            transform: translateY(-1px);
+        }
+
+        /* Cores Específicas */
+        .btn-info { background-color: #3498db; }   /* Azul */
+        .btn-edit { background-color: #f1c40f; color: #333; } /* Amarelo */
+        .btn-delete { background-color: #e74c3c; } /* Vermelho */
+
+        /* Novo estilo para o botão Adicionar */
+        .btn-add {
+            background-color: #2ecc71; /* Verde Claro */
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="header-container">
+    <h1>Cadastro de Ninjas 🥷</h1>
+    <a class="btn btn-add" th:href="@{/ninjas/ui/cadastro}">+ Novo Ninja</a>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Imagem</th>
+        <th>Nome</th>
+        <th>Idade</th>
+        <th>Email</th>
+        <th>Rank</th>
+        <th>Missões</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="ninja: ${ninjas}">
+        <td th:text="${ninja.id}">1</td>
+        <td>
+            <img th:if="${not #strings.isEmpty(ninja.imgUrl)}" th:src="${ninja.imgUrl}" alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+            <span th:unless="${not #strings.isEmpty(ninja.imgUrl)}">🚫</span>
+        </td>
+        <td th:text="${ninja.nome}">Naruto Uzumaki</td>
+        <td th:text="${ninja.idade}">17</td>
+        <td th:text="${ninja.email}">naruto@konoha.com</td>
+        <td th:text="${ninja.rank}">Hokage</td>
+        <td>
+            <span th:if="${ninja.missoes}" th:text="${ninja.missoes.nomeDaMissao}"></span>
+            <span th:if="${ninja.missoes == null}" style="color: #999; font-style: italic;">Livre</span>
+        </td>
+        <td>
+            <a class="btn btn-info" th:href="@{/ninjas/ui/listar/{id}(id=${ninja.id})}">Detalhes</a>
+            <a class="btn btn-edit" th:href="@{/ninjas/ui/alterar/{id}(id=${ninja.id})}">Atualizar</a>
+            <a class="btn btn-delete" th:href="@{/ninjas/ui/deletar/{id}(id=${ninja.id})}">Deletar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

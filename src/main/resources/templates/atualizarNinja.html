@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Atualizar Ninja</title>
+    <style>
+        /* Estilo Base igual ao das outras páginas */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Caixa centralizada (Card) */
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px; /* Um pouco mais estreito para focar a atenção */
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #3498db; /* Detalhe azul */
+            display: inline-block;
+            padding-bottom: 10px;
+            /* Truque para centralizar o sublinhado */
+            margin-left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            background-color: #fafafa;
+        }
+
+        input:focus, select:focus {
+            border-color: #3498db; /* Foco Azul */
+            outline: none;
+            background-color: #fff;
+        }
+
+        /* Área dos botões */
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 12px;
+            background-color: #3498db; /* Azul Profissional */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            flex: 1; /* Ocupa metade do espaço */
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-cancel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e0e0e0; /* Cinza para cancelar */
+            color: #555;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            flex: 1; /* Ocupa a outra metade */
+            transition: background 0.3s;
+        }
+
+        .btn-cancel:hover {
+            background-color: #d6d6d6;
+            color: #333;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Editar Ninja</h1>
+
+    <form th:action="@{/ninjas/ui/alterar}" th:object="${ninja}" method="post">
+
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="form-group">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" th:field="*{nome}" required />
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" th:field="*{email}" required />
+        </div>
+
+        <div class="form-group">
+            <label for="idade">Idade:</label>
+            <input type="number" id="idade" th:field="*{idade}" required />
+        </div>
+
+        <div class="form-group">
+            <label for="rank">Rank:</label>
+            <select id="rank" th:field="*{rank}">
+                <option value="Genin">Genin</option>
+                <option value="Chunin">Chunin</option>
+                <option value="Jounin">Jounin</option>
+                <option value="Kage">Kage</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="imgUrl">URL da Imagem:</label>
+            <input type="text" id="imgUrl" th:field="*{imgUrl}" placeholder="https://..." />
+        </div>
+
+        <div class="btn-container">
+            <a th:href="@{/ninjas/ui/listar}" class="btn-cancel">Cancelar</a>
+            <button type="submit">Salvar Alterações</button>
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>

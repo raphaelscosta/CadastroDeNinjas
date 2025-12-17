@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha do Ninja</title>
+    <style>
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center; /* Centraliza horizontalmente */
+            align-items: center;     /* Centraliza verticalmente */
+            min-height: 100vh;       /* Altura total da tela */
+            margin: 0;
+        }
+
+
+        .card {
+            background: white;
+            width: 100%;
+            max-width: 450px; /* Largura máxima do cartão */
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* Cabeçalho Colorido */
+        .card-header {
+            background: linear-gradient(135deg, #009879, #006b54);
+            height: 120px;
+            position: relative;
+        }
+
+
+        .avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 5px solid white;
+            object-fit: cover;
+            background-color: #ddd;
+            /* Posicionamento para ficar metade dentro, metade fora do header */
+            position: absolute;
+            bottom: -70px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+
+        .card-body {
+            padding-top: 80px; /* Espaço para a foto não tapar o texto */
+            padding-bottom: 30px;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+        .ninja-name {
+            font-size: 1.8rem;
+            color: #333;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .ninja-rank {
+            color: #009879;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* Lista de Detalhes */
+        .info-list {
+            margin-top: 30px;
+            text-align: left; /* Alinha os textos à esquerda */
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #777;
+            font-weight: 500;
+        }
+
+        .value {
+            color: #333;
+            font-weight: 600;
+        }
+
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 10px 30px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: background 0.3s;
+        }
+
+        .btn-back:hover {
+            background-color: #555;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="card-header">
+        <img th:src="${ninja.imgUrl != null && !ninja.imgUrl.isEmpty()} ? ${ninja.imgUrl} : 'https://cdn-icons-png.flaticon.com/512/4712/4712109.png'"
+             alt="Foto do Ninja"
+             class="avatar">
+    </div>
+
+    <div class="card-body">
+        <h1 class="ninja-name" th:text="${ninja.nome}">Nome do Ninja</h1>
+        <span class="ninja-rank" th:text="${ninja.rank}">Rank</span>
+
+        <div class="info-list">
+
+            <div class="info-item">
+                <span class="label">ID de Registro</span>
+                <span class="value" th:text="'#' + ${ninja.id}">#00</span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">Idade</span>
+                <span class="value" th:text="${ninja.idade} + ' anos'">Anos</span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">Email de Contato</span>
+                <span class="value" th:text="${ninja.email}">email@teste.com</span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">Missão Atual</span>
+                <span class="value"
+                      th:text="${ninja.missoes?.nomeDaMissao} ?: 'Nenhuma Atribuída'">
+                          Missão X
+                    </span>
+            </div>
+
+        </div>
+
+        <a href="/ninjas/ui/listar" class="btn-back">Voltar para Lista</a>
+    </div>
+</div>
+
+</body>
+</html>

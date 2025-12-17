@@ -48,6 +48,7 @@ public class NinjaService {
         boolean exists = ninjaRepository.existsById(id);
         if(exists){
             ninjaRepository.deleteById(id);
+
         }
         else{
             throw new EntityNotFoundException("Id não encontrado");
@@ -58,12 +59,36 @@ public class NinjaService {
     public NinjaDTO alterarNinjasPorId(Long id, NinjaDTO ninjaDTO){
 
         Optional<NinjaModel> ninjaExistente = ninjaRepository.findById(id);
-        if (ninjaExistente.isPresent()){
-            NinjaModel ninja = ninjaMapper.map(ninjaDTO);
-            ninja.setId(id);
-            NinjaModel ninjaSalvo = ninjaRepository.save(ninja);
-            return ninjaMapper.map(ninjaSalvo);
+        if (ninjaExistente.isPresent()) {
+            NinjaModel ninjaBD = ninjaExistente.get();
+            if (ninjaDTO.getNome() != null) {
+                ninjaBD.setNome(ninjaDTO.getNome());
+            }
+            if (ninjaDTO.getEmail() != null) {
+                ninjaBD.setEmail(ninjaDTO.getEmail());
+            }
+
+            if (ninjaDTO.getIdade() == 0) {
+                ninjaBD.setIdade(ninjaDTO.getIdade());
+            }
+
+            if (ninjaDTO.getImgUrl() != null) {
+                ninjaBD.setImgUrl(ninjaDTO.getImgUrl());
+            }
+
+            if (ninjaDTO.getRank() != null) {
+                ninjaBD.setRank(ninjaDTO.getRank());
+            }
+
+            if (ninjaDTO.getMissoes() != null) {
+                ninjaBD.setMissoes(ninjaDTO.getMissoes());
+            }
+
+            ninjaBD.setId(id);
+            NinjaModel ninjaSalvo = ninjaRepository.save(ninjaBD);
+            return ninjaMapper.map(ninjaBD);
         }
+
         return null;
     }
 }
